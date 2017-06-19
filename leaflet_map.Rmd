@@ -1,0 +1,74 @@
+---
+title: "Creating a Leaflet Map"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,fig.align='center', message = FALSE, warning=FALSE)
+```
+
+
+### Submission by Connor Lenio. Email: cojamalo@gmail.com
+
+## Completion Date: Jun 19, 2017
+
+## Goal
+
+Create a web page using R Markdown that features a map created with Leaflet. My map will show the major gyms near my home with their address and links to the gym's websites.
+
+## Load packages
+
+```{r}
+library(leaflet)
+library(htmltools)
+library(dplyr)
+```
+
+## Creating a custom icon
+
+The following code creates two different custom icons for use in the leaflet call:
+```{r}
+strongIcon <- makeIcon(
+  iconUrl = "https://s3.amazonaws.com/cojamalo/misc/leafleticon1.png",
+  iconWidth = 60, iconHeight = 70,
+  iconAnchorX = 0, iconAnchorY = 0
+)
+homeIcon <- makeIcon(
+  iconUrl = "https://s3.amazonaws.com/cojamalo/misc/houseiconleaflet.png",
+  iconWidth = 60, iconHeight = 60,
+  iconAnchorX = 0, iconAnchorY = 0
+)
+```
+
+## Prepare marker data
+
+The following vectors supply the input data for the markers in the leaflet call:
+```{r}
+loc_lng = c(-77.067280, -77.052347, -77.103329, -77.054084, -77.060069)
+loc_lat = c(38.84600, 38.843133, 38.837406, 38.821083, 38.827681)
+
+labels = c("Gold's Gym", "LA Fitness", "Xsport Fitness", "YMCA", "Mount Vernon Rec Center")
+
+content <- c(paste(sep = "<br/>", "<b><a href='http://www.goldsgym.com/southarlingtonva/'>Gold's Gym</a></b>", "2955 S. Glebe Rd", "Arlington, VA 22206"),
+            paste(sep = "<br/>", "<b><a href='https://www.lafitness.com/Pages/clubhome.aspx?clubid=542&ARLINGTON-Virginia+GYUM&utm_source=google&utm_medium=googlemaps&utm_campaign=maps'>LA Fitness</a></b>", "3550 S Clark St", "Arlington,  VA  22202"),
+            paste(sep = "<br/>", "<b><a href='http://www.xsportfitness.com/locations/alexandria-va-gym.html'>Xsport Fitness</a></b>", "4300 King St", "Alexandria, VA 22302"),
+            paste(sep = "<br/>", "<b><a href='http://www.ymcadc.org/branch.cfm?bid=02&utm_source=local&utm_medium=organic&utm_campaign=gmb'>YMCA</a></b>", "420 East Monroe Ave", "Alexandria, VA 22301"),
+            paste(sep = "<br/>", "<b><a href='https://www.alexandriava.gov/recreation/info/default.aspx?id=95493'>Mount Vernon Rec Center</a></b>", "2701 Commonwealth Ave", "Alexandria, VA 22305")
+             )
+```
+
+
+
+## Calling leaflet
+
+Finally, leaflet is called to produce the final map:
+```{r}
+map = leaflet() %>% 
+        addTiles() %>% 
+        addProviderTiles(providers$Stamen) %>% # Custom styling for the map
+        addMarkers(lng=-77.073528, lat=38.841367, popup = c("Home"), , icon = homeIcon) %>%
+        addMarkers(lng=loc_lng, lat=loc_lat, popup = content, label = labels, icon = strongIcon, labelOptions= labelOptions(noHide = F))
+map
+```
+
+* * *

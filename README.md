@@ -3,7 +3,7 @@ The following files were submitted for the first project of John Hopkins Univers
 
 Completion Date: Jun 19, 2017
 
-Please view https://cojamalo.github.io/DATA-JHU-Machine-Learning-1/machine-learning.html to properly view the completed html document.
+Please view https://cojamalo.github.io/DATA-JHU-Leaflet/leaflet_map.html to properly view the completed html document.
 
 Project Assignment:
 
